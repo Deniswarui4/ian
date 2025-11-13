@@ -1,0 +1,397 @@
+---
+// Define the project types and projects data
+const projectTypes = ['All', 'art-and-structure', 'cat2-art-and-structural-drawing', 'cat3-art-and-structural-drawing', 'technical-drawing-cat1', 'technical-drawing-cat2'] as const;
+
+// Define TypeScript interface for Project
+type ProjectType = typeof projectTypes[number];
+
+export interface Project {
+  id: number;
+  title: string;
+  type: ProjectType;
+  image: string;
+  description: string;
+}
+
+const projects: Project[] = [
+  {
+    id: 1,
+    title: 'Art and Structure 1',
+    type: 'art-and-structure',
+    image: '/Art and structure/1.jpeg',
+    description: 'Beautiful art and structural design'
+  },
+  {
+    id: 2,
+    title: 'Art and Structure 2',
+    type: 'art-and-structure',
+    image: '/Art and structure/2.jpeg',
+    description: 'Contemporary structural art piece'
+  },
+  {
+    id: 3,
+    title: 'Art and Structure 3',
+    type: 'art-and-structure',
+    image: '/Art and structure/3.jpeg',
+    description: 'Modern structural design'
+  },
+  {
+    id: 4,
+    title: 'Cat2 Art and Structural 1',
+    type: 'cat2-art-and-structural-drawing',
+    image: '/Cat2 art and structural drawing/4.jpeg',
+    description: 'Category 2 structural drawing'
+  },
+  {
+    id: 5,
+    title: 'Cat2 Art and Structural 2',
+    type: 'cat2-art-and-structural-drawing',
+    image: '/Cat2 art and structural drawing/5.jpeg',
+    description: 'Detailed structural art'
+  },
+  {
+    id: 6,
+    title: 'Cat3 Art and Structural 1',
+    type: 'cat3-art-and-structural-drawing',
+    image: '/Cat3 art and structural drawing/1.jpeg',
+    description: 'Category 3 structural drawing'
+  },
+  {
+    id: 7,
+    title: 'Cat3 Art and Structural 2',
+    type: 'cat3-art-and-structural-drawing',
+    image: '/Cat3 art and structural drawing/2.jpeg',
+    description: 'Innovative structural design'
+  },
+  {
+    id: 8,
+    title: 'Cat3 Art and Structural 3',
+    type: 'cat3-art-and-structural-drawing',
+    image: '/Cat3 art and structural drawing/3.jpeg',
+    description: 'Modern structural approach'
+  },
+  {
+    id: 9,
+    title: 'Technical Drawing Cat1 1',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/1.jpeg',
+    description: 'Detailed technical drawing'
+  },
+  {
+    id: 10,
+    title: 'Technical Drawing Cat1 2',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/2.jpeg',
+    description: 'Precision technical art'
+  },
+  {
+    id: 11,
+    title: 'Technical Drawing Cat1 3',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/3.jpeg',
+    description: 'Technical precision in design'
+  },
+  {
+    id: 12,
+    title: 'Technical Drawing Cat1 4',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/4.jpeg',
+    description: 'Detailed engineering art'
+  },
+  {
+    id: 13,
+    title: 'Technical Drawing Cat2 1',
+    type: 'technical-drawing-cat2',
+    image: '/Technical drawing cat2/1.jpeg',
+    description: 'Category 2 technical drawing'
+  },
+  {
+    id: 14,
+    title: 'Technical Drawing Cat2 2',
+    type: 'technical-drawing-cat2',
+    image: '/Technical drawing cat2/2.jpeg',
+    description: 'Advanced technical art'
+  },
+  {
+    id: 15,
+    title: 'Technical Drawing Cat2 3',
+    type: 'technical-drawing-cat2',
+    image: '/Technical drawing cat2/3.jpeg',
+    description: 'Detailed structure visualization'
+  }
+];
+---
+
+<!-- Project Modal -->
+<div id="projectModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4 hidden">
+  <div class="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <h2 id="modalTitle" class="text-2xl font-bold text-gray-900"></h2>
+          <p id="modalType" class="text-gray-600"></p>
+        </div>
+        <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div id="modalImage" class="mb-6 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+        <!-- Image will be set via JavaScript -->
+      </div>
+      <p id="modalDescription" class="text-gray-700"></p>
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto px-4 py-12">
+  <!-- Filter Buttons -->
+  <div class="flex flex-wrap justify-center gap-4 mb-12">
+    {projectTypes.map(type => (
+      <button 
+        class="filter-btn px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+        data-filter={type === 'All' ? '*' : `.${type}`}
+      >
+        {type === 'All' ? 'All' : type.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+      </button>
+    ))}
+  </div>
+
+  <!-- Projects Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {projects.map(project => (
+      <div 
+        class={`project-item ${project.type} group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300`}
+        data-category={project.type}
+      >
+        <div class="relative h-64 bg-gray-200 overflow-hidden">
+          <!-- Project image -->
+          <img 
+            src={project.image} 
+            alt={project.title}
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <!-- Overlay -->
+          <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <button class="view-project-btn bg-white text-gray-900 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors" 
+                    data-project-id={project.id}>
+              View Project
+            </button>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-1">{project.title}</h3>
+          <p class="text-gray-600">{project.type}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<!-- Add JavaScript for filtering and modal -->
+<script>
+  // Function to open project modal
+  function openProjectModal(project) {
+    const modal = document.getElementById('projectModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalType = document.getElementById('modalType');
+    const modalImage = document.getElementById('modalImage');
+    const modalDescription = document.getElementById('modalDescription');
+    
+    // Set modal content with null checks
+    if (modalTitle) modalTitle.textContent = project.title;
+    if (modalType) modalType.textContent = project.type;
+    if (modalDescription) modalDescription.textContent = project.description;
+    
+    // Set image (using placeholder for now)
+    if (modalImage) {
+      modalImage.innerHTML = `
+        <img src="${project.image}" alt="${project.title}" class="w-full h-auto max-h-[70vh] object-contain" />
+      `;
+    }
+    
+    // Show modal
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  // Close modal function
+  function closeProjectModal() {
+    const modal = document.getElementById('projectModal');
+    if (modal) {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  }
+  
+  // Add event listeners when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Close modal when clicking the close button or outside the modal
+    document.getElementById('closeModal')?.addEventListener('click', closeProjectModal);
+    document.getElementById('projectModal')?.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('projectModal')) {
+        closeProjectModal();
+      }
+    });
+    
+    // Add click event to all view project buttons
+    document.querySelectorAll('.view-project-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const projectId = parseInt(button.getAttribute('data-project-id') || '0');
+        const projects = [
+          {
+            id: 1,
+            title: 'Art and Structure 1',
+            type: 'art-and-structure',
+            image: '/Art and structure/1.jpeg',
+            description: 'Beautiful art and structural design'
+          },
+          {
+            id: 2,
+            title: 'Art and Structure 2',
+            type: 'art-and-structure',
+            image: '/Art and structure/2.jpeg',
+            description: 'Contemporary structural art piece'
+          },
+          {
+            id: 3,
+            title: 'Art and Structure 3',
+            type: 'art-and-structure',
+            image: '/Art and structure/3.jpeg',
+            description: 'Modern structural design'
+          },
+          {
+            id: 4,
+            title: 'Cat2 Art and Structural 1',
+            type: 'cat2-art-and-structural-drawing',
+            image: '/Cat2 art and structural drawing/4.jpeg',
+            description: 'Category 2 structural drawing'
+          },
+          {
+            id: 5,
+            title: 'Cat2 Art and Structural 2',
+            type: 'cat2-art-and-structural-drawing',
+            image: '/Cat2 art and structural drawing/5.jpeg',
+            description: 'Detailed structural art'
+          },
+          {
+            id: 6,
+            title: 'Cat3 Art and Structural 1',
+            type: 'cat3-art-and-structural-drawing',
+            image: '/Cat3 art and structural drawing/1.jpeg',
+            description: 'Category 3 structural drawing'
+          },
+          {
+            id: 7,
+            title: 'Cat3 Art and Structural 2',
+            type: 'cat3-art-and-structural-drawing',
+            image: '/Cat3 art and structural drawing/2.jpeg',
+            description: 'Innovative structural design'
+          },
+          {
+            id: 8,
+            title: 'Cat3 Art and Structural 3',
+            type: 'cat3-art-and-structural-drawing',
+            image: '/Cat3 art and structural drawing/3.jpeg',
+            description: 'Modern structural approach'
+          },
+          {
+            id: 9,
+            title: 'Technical Drawing Cat1 1',
+            type: 'technical-drawing-cat1',
+            image: '/Technical drawing cat1/1.jpeg',
+            description: 'Detailed technical drawing'
+          },
+          {
+            id: 10,
+            title: 'Technical Drawing Cat1 2',
+            type: 'technical-drawing-cat1',
+            image: '/Technical drawing cat1/2.jpeg',
+            description: 'Precision technical art'
+          },
+          {
+            id: 11,
+            title: 'Technical Drawing Cat1 3',
+            type: 'technical-drawing-cat1',
+            image: '/Technical drawing cat1/3.jpeg',
+            description: 'Technical precision in design'
+          },
+          {
+            id: 12,
+            title: 'Technical Drawing Cat1 4',
+            type: 'technical-drawing-cat1',
+            image: '/Technical drawing cat1/4.jpeg',
+            description: 'Detailed engineering art'
+          },
+          {
+            id: 13,
+            title: 'Technical Drawing Cat2 1',
+            type: 'technical-drawing-cat2',
+            image: '/Technical drawing cat2/1.jpeg',
+            description: 'Category 2 technical drawing'
+          },
+          {
+            id: 14,
+            title: 'Technical Drawing Cat2 2',
+            type: 'technical-drawing-cat2',
+            image: '/Technical drawing cat2/2.jpeg',
+            description: 'Advanced technical art'
+          },
+          {
+            id: 15,
+            title: 'Technical Drawing Cat2 3',
+            type: 'technical-drawing-cat2',
+            image: '/Technical drawing cat2/3.jpeg',
+            description: 'Detailed structure visualization'
+          }
+        ];
+        const project = projects.find(p => p.id === projectId);
+        if (project) {
+          openProjectModal(project);
+        }
+      });
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeProjectModal();
+      }
+    });
+
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active state from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('bg-blue-600', 'text-white'));
+        // Add active state to clicked button
+        button.classList.add('bg-blue-600', 'text-white');
+        
+        const filterValue = button.getAttribute('data-filter');
+        if (!filterValue) return; // Skip if no filter value is found
+        
+        // Remove the leading dot from filterValue to get the class name
+        const className = filterValue.startsWith('.') ? filterValue.substring(1) : '';
+        
+        projectItems.forEach(item => {
+          if (filterValue === '*' || item.classList.contains(className)) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Set 'All' as active by default
+    if (filterButtons.length > 0) {
+      filterButtons[0].click();
+    }
+  });
+</script>

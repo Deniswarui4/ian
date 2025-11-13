@@ -1,11 +1,30 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import PortfolioGallery from '../components/PortfolioGallery.astro';
 ---
 
 <Layout>
-	<Welcome />
+  <main>
+    <!-- Hero Section -->
+    <section class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Architectural Portfolio</h1>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">Showcasing innovative designs and exceptional craftsmanship in architecture</p>
+      </div>
+    </section>
+
+    <!-- Portfolio Gallery -->
+    <PortfolioGallery />
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Explore Our Portfolio</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-6">Browse through our collection of architectural designs and student documents</p>
+        <a href="/documents" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors">
+          View Documents
+        </a>
+      </div>
+    </section>
+  </main>
 </Layout>
