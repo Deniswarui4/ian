@@ -1,6 +1,6 @@
 ---
 // Define the project types and projects data
-const projectTypes = ['All', 'art-and-structure', 'cat2-art-and-structural-drawing', 'cat3-art-and-structural-drawing', 'technical-drawing-cat1', 'technical-drawing-cat2'] as const;
+const projectTypes = ['All', 'art-and-structure', 'cat2-art-and-structural-drawing', 'cat3-art-and-structural-drawing', 'technical-drawing-cat1', 'technical-drawing-cat2', 'producing-architectural-models', 'communication-skills'] as const;
 
 // Define TypeScript interface for Project
 type ProjectType = typeof projectTypes[number];
@@ -100,6 +100,48 @@ const projects: Project[] = [
   },
   {
     id: 13,
+    title: 'Technical Drawing Cat1 5',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/5.jpeg',
+    description: 'Advanced technical illustration'
+  },
+  {
+    id: 14,
+    title: 'Technical Drawing Cat1 6',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/6.jpeg',
+    description: 'Engineering design drawing'
+  },
+  {
+    id: 15,
+    title: 'Technical Drawing Cat1 7',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/7.jpeg',
+    description: 'Technical schematic design'
+  },
+  {
+    id: 16,
+    title: 'Technical Drawing Cat1 8',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/8.jpeg',
+    description: 'Precision engineering drawing'
+  },
+  {
+    id: 17,
+    title: 'Technical Drawing Cat1 9',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/9.jpeg',
+    description: 'Detailed technical schematic'
+  },
+  {
+    id: 18,
+    title: 'Technical Drawing Cat1 10',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/10.jpeg',
+    description: 'Advanced engineering design'
+  },
+  {
+    id: 13,
     title: 'Technical Drawing Cat2 1',
     type: 'technical-drawing-cat2',
     image: '/Technical drawing cat2/1.jpeg',
@@ -119,6 +161,35 @@ const projects: Project[] = [
     image: '/Technical drawing cat2/3.jpeg',
     description: 'Detailed structure visualization'
   }
+  ,
+  {
+    id: 16,
+    title: 'Technical Drawing Cat1 11',
+    type: 'technical-drawing-cat1',
+    image: '/Technical drawing cat1/11.jpeg',
+    description: 'Detailed technical illustration'
+  },
+  {
+    id: 20,
+    title: 'Architectural Model 1',
+    type: 'producing-architectural-models',
+    image: '/producing/1.jpeg',
+    description: 'Architectural scale model'
+  },
+  {
+    id: 21,
+    title: 'Communication Skills 1',
+    type: 'communication-skills',
+    image: '/communication/1.jpeg',
+    description: 'Communication skills demonstration'
+  },
+  {
+    id: 22,
+    title: 'Communication Skills 2',
+    type: 'communication-skills',
+    image: '/communication/2.jpeg',
+    description: 'Advanced communication techniques'
+  }
 ];
 ---
 
@@ -135,7 +206,7 @@ const projects: Project[] = [
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
-        </button>
+          </button>
       </div>
       <div id="modalImage" class="mb-6 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
         <!-- Image will be set via JavaScript -->
@@ -162,7 +233,7 @@ const projects: Project[] = [
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {projects.map(project => (
       <div 
-        class={`project-item ${project.type} group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300`}
+        class={`project-item ${project.type.replace(/\s+/g, '-')} group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300`}
         data-category={project.type}
       >
         <div class="relative h-64 bg-gray-200 overflow-hidden">
